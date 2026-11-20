@@ -1,2 +1,0 @@
-# MemoriSim
-Project Final SO
