@@ -27,9 +27,36 @@ input,select{padding:.7rem;border:1px solid #cdd8f3;border-radius:12px;font:inhe
 .slot{width:84px;height:70px;border-radius:14px;display:grid;place-items:center;font-size:1.8rem;font-weight:700;background:#cfe0ff;border:2px solid #9db9f5;animation:pop .45s}
 .slot.empty{background:#fff;border:2px dashed #b8c6e6;color:#9aa9c9}.slot.fresh{background:#bff0d6;border-color:var(--ok)}.slot.replaced{background:#ffe3a3;border-color:var(--warn)}.slot.hit{background:#bff0d6;border-color:var(--ok);animation:none}
 .slots.small .slot{width:56px;height:50px;font-size:1.2rem;animation:none}
-.legend{display:flex;gap:1rem;flex-wrap:wrap;font-size:.8rem;margin-top:.6rem}.dot{display:inline-block;width:12px;height:12px;border-radius:4px;margin-right:.3rem}.dot.fresh{background:#bff0d6}.dot.replaced{background:#ffe3a3}.dot.keep{background:#cfe0ff}
+.legend{display:flex;gap:1rem;flex-wrap:wrap;font-size:.8rem;margin-top:.6rem}.dot{display:inline-block;width:12px;height:12px;border-radius:4px;margin-right:.3rem}.dot.fresh{background:#bff0d6}.dot.replaced{background:#ffe3a3}.dot.keep{background:#cfe0ff}.dot.hit{background:var(--ok)}
 .stats{display:grid;grid-template-columns:repeat(3,1fr);gap:1rem;text-align:center}.stats>div{display:flex;flex-direction:column;align-items:center;gap:.2rem}.stats b{font-size:2rem}
 dl{margin:0}dt{font-weight:700;color:var(--blue);margin-top:.6rem}dd{margin:0}
 .footer{text-align:center;padding:1.5rem;color:#6a7ca3;font-size:.9rem}
 @keyframes pop{0%{transform:scale(.6) translateY(-14px);opacity:0}100%{transform:none;opacity:1}}@keyframes float{50%{transform:translateY(-8px)}}
 @media(max-width:800px){.hero,.grid2,.cards3{grid-template-columns:1fr}.stats{grid-template-columns:1fr}.navbar{justify-content:center}}
+
+/* Memory Trace Matrix Table */
+.matrix-card{overflow:hidden}
+.matrix-header{display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:.8rem;margin-bottom:.4rem}
+.matrix-actions{display:flex;align-items:center;gap:.8rem;flex-wrap:wrap}
+.btn-sm{padding:.4rem .9rem;font-size:.85rem}
+.matrix-scroll{width:100%;overflow-x:auto;border:1px solid #cdd8f3;border-radius:14px;background:#fff;box-shadow:inset 0 2px 4px rgba(20,40,75,.02)}
+.matrix-table{width:100%;border-collapse:separate;border-spacing:0;text-align:center;font-size:.92rem}
+.matrix-table th,.matrix-table td{padding:.55rem .75rem;border-right:1px solid #e1e8f8;border-bottom:1px solid #e1e8f8;min-width:44px;white-space:nowrap}
+.matrix-table thead tr th{background:var(--light);color:var(--navy);font-weight:700}
+.matrix-table .sub-header-row th{background:#f8faff}
+.matrix-table .sticky-col{position:sticky;left:0;background:#fff;z-index:2;font-weight:700;color:var(--navy);text-align:left;border-right:2px solid #cdd8f3;min-width:110px}
+.matrix-table thead .sticky-col{background:var(--light);z-index:3}
+.matrix-table .sub-header-row .sticky-col{background:#f8faff}
+.matrix-page-badge{display:inline-flex;align-items:center;justify-content:center;width:28px;height:28px;border-radius:8px;background:var(--navy);color:#fff;font-weight:700;font-size:.9rem}
+.matrix-cell{font-weight:600;cursor:pointer;transition:background .15s ease}
+.matrix-cell.cell-empty{color:#9aa9c9;background:#fafbff}
+.matrix-cell.cell-fresh{background:#bff0d6;color:#065f46;font-weight:700}
+.matrix-cell.cell-replaced{background:#ffe3a3;color:#92400e;font-weight:700}
+.matrix-cell.cell-hit{background:#bff0d6;color:#065f46;font-weight:700}
+.matrix-cell.cell-keep{background:#fff;color:var(--navy)}
+.matrix-table tr:hover .matrix-cell:not(.cell-fresh):not(.cell-replaced):not(.cell-hit){background:#f4f7ff}
+.matrix-table .active-col{position:relative;background:rgba(59,111,224,.12)!important;outline:2px solid var(--blue);outline-offset:-2px}
+.matrix-table th.active-col{background:#d3e2ff!important;color:var(--blue)}
+.status-pill{display:inline-block;padding:.2rem .55rem;border-radius:99px;font-size:.75rem;font-weight:700;letter-spacing:.5px}
+.status-pill.hit{background:var(--ok);color:#fff}
+.status-pill.fault{background:var(--bad);color:#fff}

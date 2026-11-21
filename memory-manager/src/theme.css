@@ -1,0 +1,179 @@
+/* Variabel Default: Light Mode */
+:root {
+  --bg-page: #f1f5f9;
+  --bg-card: #ffffff;
+  --bg-elevated: #e2e8f0;
+  --text-main: #0f172a;
+  --text-muted: #475569;
+  --border-color: #cbd5e1;
+  --accent-color: #2563eb;
+  --shadow-card: 0 4px 16px rgba(15, 23, 42, 0.06);
+}
+
+/* Variabel Saat Dark Mode Aktif */
+:root[data-theme='dark'] {
+  --bg-page: #090d16;
+  --bg-card: #111827;
+  --bg-elevated: #1e293b;
+  --text-main: #f8fafc;
+  --text-muted: #cbd5e1;
+  --border-color: #1e293b;
+  --accent-color: #3b82f6;
+  --shadow-card: 0 8px 24px rgba(0, 0, 0, 0.45);
+}
+
+/* 1. Hilangkan area putih di pinggir kiri-kanan halaman */
+html,
+body,
+#root {
+  background-color: var(--bg-page) !important;
+  color: var(--text-main) !important;
+  font-family: 'Plus Jakarta Sans', system-ui, -apple-system, sans-serif;
+  min-height: 100vh;
+  transition: background-color 0.25s ease, color 0.25s ease;
+}
+
+/* 2. Bagian utama & wrapper layout transparan mengikuti background gelap */
+:root[data-theme='dark'] main,
+:root[data-theme='dark'] section,
+:root[data-theme='dark'] article,
+:root[data-theme='dark'] footer,
+:root[data-theme='dark'] [class*='container'],
+:root[data-theme='dark'] [class*='wrapper'],
+:root[data-theme='dark'] [class*='hero'] {
+  background-color: var(--bg-page) !important;
+  color: var(--text-main) !important;
+  border-color: var(--border-color) !important;
+}
+
+/* 3. Navbar & Header */
+:root[data-theme='dark'] header,
+:root[data-theme='dark'] nav {
+  background-color: var(--bg-card) !important;
+  border-color: var(--border-color) !important;
+}
+
+:root[data-theme='dark'] [class*='logo'],
+:root[data-theme='dark'] [class*='brand'] {
+  color: #60a5fa !important;
+}
+
+/* 4. Semua kartu, bingkai fitur bawah, kotak statistik, & slot kosong */
+:root[data-theme='dark'] aside,
+:root[data-theme='dark'] .card,
+:root[data-theme='dark'] .panel,
+:root[data-theme='dark'] [class*='card'],
+:root[data-theme='dark'] [class*='box'],
+:root[data-theme='dark'] [class*='panel'],
+:root[data-theme='dark'] [class*='feature'],
+:root[data-theme='dark'] [class*='highlight'],
+:root[data-theme='dark'] [class*='banner'],
+:root[data-theme='dark'] [class*='step'],
+:root[data-theme='dark'] [class*='stat'],
+:root[data-theme='dark'] [class*='info'],
+:root[data-theme='dark'] [class*='summary'],
+:root[data-theme='dark'] [class*='modal'],
+:root[data-theme='dark'] [class*='result'],
+:root[data-theme='dark'] [class*='control'],
+:root[data-theme='dark'] [class*='empty'],
+:root[data-theme='dark'] [class*='slot'] {
+  background-color: var(--bg-card) !important;
+  color: var(--text-main) !important;
+  border-color: #263244 !important;
+}
+
+/* 5. Keterbacaan teks judul & paragraf */
+:root[data-theme='dark'] h1,
+:root[data-theme='dark'] h2,
+:root[data-theme='dark'] h3,
+:root[data-theme='dark'] h4,
+:root[data-theme='dark'] strong,
+:root[data-theme='dark'] label {
+  color: var(--text-main) !important;
+}
+
+:root[data-theme='dark'] p,
+:root[data-theme='dark'] li {
+  color: var(--text-muted) !important;
+}
+
+/* 6. Tombol sekunder (Pelajari Lebih Lanjut, LRU, Optimal) vs Tombol aktif (Biru) */
+:root[data-theme='dark'] button,
+:root[data-theme='dark'] a[class*='btn'],
+:root[data-theme='dark'] a[class*='button'] {
+  background-color: var(--bg-elevated) !important;
+  color: var(--text-main) !important;
+  border-color: #334155 !important;
+}
+
+:root[data-theme='dark'] button:hover:not(:disabled) {
+  background-color: #283548 !important;
+}
+
+:root[data-theme='dark'] button.active,
+:root[data-theme='dark'] button[class*='active'],
+:root[data-theme='dark'] button[class*='primary'],
+:root[data-theme='dark'] a[class*='active'],
+:root[data-theme='dark'] a[class*='primary'],
+:root[data-theme='dark'] .btn-primary {
+  background-color: #2563eb !important;
+  border-color: #3b82f6 !important;
+  color: #ffffff !important;
+}
+
+/* 7. Form Input & Tabel */
+:root[data-theme='dark'] input,
+:root[data-theme='dark'] select,
+:root[data-theme='dark'] textarea {
+  background-color: #0f172a !important;
+  color: var(--text-main) !important;
+  border-color: #334155 !important;
+}
+
+:root[data-theme='dark'] table,
+:root[data-theme='dark'] th,
+:root[data-theme='dark'] td {
+  background-color: var(--bg-card) !important;
+  color: var(--text-main) !important;
+  border-color: var(--border-color) !important;
+}
+
+:root[data-theme='dark'] th {
+  background-color: #0f172a !important;
+}
+
+/* 8. Tombol Switcher Light / Dark di Sebelah Kiri "Mulai Simulasi" */
+.theme-toggle-btn {
+  position: fixed;
+  top: 13px;
+  right: 205px;
+  z-index: 9999;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 8px 14px;
+  border-radius: 999px;
+  border: 1px solid var(--border-color);
+  background-color: var(--bg-elevated) !important;
+  color: var(--text-main) !important;
+  font-family: inherit;
+  font-size: 0.82rem;
+  font-weight: 600;
+  cursor: pointer;
+  box-shadow: var(--shadow-card);
+  transition: transform 0.15s ease, background-color 0.25s ease, color 0.25s ease;
+}
+
+.theme-toggle-btn:hover {
+  transform: translateY(-1px);
+  border-color: var(--accent-color) !important;
+}
+
+@media (max-width: 960px) {
+  .theme-toggle-btn {
+    top: auto;
+    bottom: 18px;
+    left: 18px;
+    right: auto;
+  }
+}
