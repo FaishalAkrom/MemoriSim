@@ -179,7 +179,7 @@ export default function MemoryMatrix({ steps, cap, currentIdx, onSelect, algoNam
           <button className="btn btn-ghost btn-sm" onClick={handleDownloadCSV} title="Unduh data tabel dalam format CSV">
             <Download size={14} /> Unduh CSV
           </button>
-          <button className="btn btn-primary btn-sm" onClick={handleDownloadPNG} title="Simpan tabel matriks sebagai gambar PNG">
+          <button className="btn btn-ghost btn-sm" onClick={handleDownloadPNG} title="Simpan tabel matriks sebagai gambar PNG">
             <ImageIcon size={14} /> Unduh PNG
           </button>
         </div>
