@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect, useRef } from "react";
 
 const ANGGOTA = [
   { nama: "Chalisa Adelia Putri", npm: "257006111072", foto: "chalisa.jpeg", warna: "blue", posisi: "center 35%" },
@@ -6,7 +6,7 @@ const ANGGOTA = [
   { nama: "Hilmi Juliansyah", npm: "257006111080", foto: "hilmi.jpeg", warna: "orange", posisi: "center 40%" },
   { nama: "Muhammad Alfaridzi Hudmawan", npm: "257006111085", foto: "alpa.jpeg", warna: "blue", posisi: "center 65%" },
   { nama: "Muhammad Fatan Labiha", npm: "257006111093", foto: "fatan.jpeg", warna: "green", posisi: "center 75%" },
-  { nama: "Rakha Fauzan Nughraha", npm: "257006111083", foto: "rakha.jpg", warna: "orange", posisi: "center center" },
+  { nama: "Rakha Fauzan Nughraha", npm: "257006111083", foto: "rakha.jpg", musik: "/foto/rakha.mpeg", warna: "orange", posisi: "center center" },
 ];
 
 const inisial = (nama) =>
@@ -14,6 +14,68 @@ const inisial = (nama) =>
 
 export default function AboutUs() {
   const [selectedFoto, setSelectedFoto] = useState(null);
+  const audioRef = useRef(null);
+  const fadeTimerRef = useRef(null);
+
+  useEffect(() => {
+    // Bersihkan interval fade & hentikan audio sebelumnya jika ada
+    if (fadeTimerRef.current) {
+      clearInterval(fadeTimerRef.current);
+      fadeTimerRef.current = null;
+    }
+    if (audioRef.current) {
+      audioRef.current.pause();
+      audioRef.current.currentTime = 0;
+      audioRef.current = null;
+    }
+
+    // Putar musik dengan transisi fade-in dari pelan ke kencang khusus untuk Rakha
+    if (selectedFoto?.musik) {
+      const audio = new Audio(selectedFoto.musik);
+      audio.loop = true;
+      audio.volume = 1.0;
+      audioRef.current = audio;
+
+      const AudioContext = window.AudioContext || window.webkitAudioContext;
+      const ctx = new AudioContext();
+      const source = ctx.createMediaElementSource(audio);
+      const gainNode = ctx.createGain();
+      gainNode.gain.value = 0.05;
+
+      source.connect(gainNode);
+      gainNode.connect(ctx.destination);
+
+      audio
+        .play()
+        .then(() => {
+          let level = 0.05;
+          const targetGain = 2.5; // Ubah angka ini (misal 3.0 atau 3.5) kalau mau lebih kencang lagi
+          fadeTimerRef.current = setInterval(() => {
+            level = Math.min(targetGain, +(level + 0.12).toFixed(2));
+            gainNode.gain.value = level;
+            if (level >= targetGain) {
+              clearInterval(fadeTimerRef.current);
+              fadeTimerRef.current = null;
+            }
+          }, 80);
+        })
+        .catch((err) => {
+          console.warn("Gagal memutar audio:", err);
+        });
+    }
+    
+
+    return () => {
+      if (fadeTimerRef.current) {
+        clearInterval(fadeTimerRef.current);
+        fadeTimerRef.current = null;
+      }
+      if (audioRef.current) {
+        audioRef.current.pause();
+        audioRef.current.currentTime = 0;
+      }
+    };
+  }, [selectedFoto]);
 
   return (
     <main className="tk">
