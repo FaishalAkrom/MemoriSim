@@ -1,5 +1,10 @@
 import { Cpu, Play } from 'lucide-react'
-const MENU = [['beranda', 'Beranda'], ['tentang', 'Tentang'], ['perbandingan', 'Perbandingan']]
+const MENU = [
+  ['beranda', 'Beranda'],
+  ['tentang', 'Tentang'],
+  ['perbandingan', 'Perbandingan'],
+  ['tentang-kami', 'Tentang Kami']
+]
 export default function Navbar({ page, go }) {
   return (
     <header className="navbar">

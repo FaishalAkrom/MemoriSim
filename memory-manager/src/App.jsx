@@ -5,6 +5,7 @@ import Home from './pages/Home.jsx'
 import Simulation from './pages/Simulation.jsx'
 import Comparison from './pages/Comparison.jsx'
 import About from './pages/About.jsx'
+import AboutUs from './pages/AboutUs.jsx'
 
 export default function App() {
   const [page, setPage] = useState('beranda')
@@ -19,6 +20,7 @@ export default function App() {
         {page === 'simulasi' && <Simulation config={config} setConfig={setConfig} />}
         {page === 'perbandingan' && <Comparison config={config} go={go} />}
         {page === 'tentang' && <About go={go} />}
+        {page === 'tentang-kami' && <AboutUs />}
       </main>
       <Footer />
     </div>
