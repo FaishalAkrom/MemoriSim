@@ -1,39 +1,38 @@
 /* Variabel Default: Aurora Light Mode */
 :root {
-  --bg-page: #eef4ff;
-  --bg-card: rgba(255, 255, 255, 0.75);
-  --bg-elevated: rgba(255, 255, 255, 0.88);
+  --bg-page: #eaf2ff;
+  --bg-card: rgba(255, 255, 255, 0.68);
+  --bg-elevated: rgba(255, 255, 255, 0.85);
   --text-main: #0f172a;
   --text-muted: #475569;
-  --border-color: rgba(99, 102, 241, 0.18);
+  --border-color: rgba(99, 102, 241, 0.22);
   --accent-color: #0284c7;
-  --aurora-gradient: linear-gradient(135deg, #06b6d4 0%, #3b82f6 50%, #8b5cf6 100%);
-  --aurora-gradient-hover: linear-gradient(135deg, #22d3ee 0%, #60a5fa 50%, #a78bfa 100%);
-  --aurora-text-gradient: linear-gradient(90deg, #0284c7 0%, #3b82f6 50%, #8b5cf6 100%);
-  --shadow-card: 0 10px 30px rgba(37, 99, 235, 0.08);
-  --aurora-glow: 0 8px 26px -4px rgba(56, 189, 248, 0.35), 0 4px 16px -2px rgba(139, 92, 246, 0.28);
+  --aurora-gradient: linear-gradient(135deg, #06b6d4 0%, #3b82f6 48%, #8b5cf6 78%, #ec4899 100%);
+  --aurora-gradient-hover: linear-gradient(135deg, #22d3ee 0%, #60a5fa 48%, #a78bfa 78%, #f472b6 100%);
+  --aurora-text-gradient: linear-gradient(90deg, #0284c7 0%, #3b82f6 45%, #8b5cf6 80%, #db2777 100%);
+  --shadow-card: 0 12px 32px rgba(37, 99, 235, 0.1);
+  --aurora-glow: 0 10px 28px -4px rgba(6, 182, 212, 0.4), 0 6px 20px -2px rgba(139, 92, 246, 0.35);
 }
 
 /* Variabel Saat Aurora Dark Mode Aktif */
 :root[data-theme='dark'] {
-  --bg-page: #060918;
-  --bg-card: rgba(15, 23, 42, 0.62);
-  --bg-elevated: rgba(23, 33, 61, 0.78);
+  --bg-page: #050816;
+  --bg-card: rgba(13, 20, 42, 0.52);
+  --bg-elevated: rgba(22, 33, 66, 0.72);
   --text-main: #f8fafc;
-  --text-muted: #94a3b8;
-  --border-color: rgba(148, 163, 184, 0.16);
+  --text-muted: #cbd5e1;
+  --border-color: rgba(148, 163, 184, 0.2);
   --accent-color: #38bdf8;
-  --aurora-gradient: linear-gradient(135deg, #06b6d4 0%, #3b82f6 50%, #8b5cf6 100%);
-  --aurora-gradient-hover: linear-gradient(135deg, #22d3ee 0%, #60a5fa 50%, #a78bfa 100%);
-  --aurora-text-gradient: linear-gradient(90deg, #22d3ee 0%, #60a5fa 50%, #c084fc 100%);
-  --shadow-card: 0 12px 32px rgba(0, 0, 0, 0.48);
-  --aurora-glow: 0 10px 30px -6px rgba(56, 189, 248, 0.35), 0 4px 18px -4px rgba(139, 92, 246, 0.32);
+  --aurora-gradient: linear-gradient(135deg, #10b981 0%, #06b6d4 35%, #3b82f6 68%, #a855f7 100%);
+  --aurora-gradient-hover: linear-gradient(135deg, #34d399 0%, #22d3ee 35%, #60a5fa 68%, #c084fc 100%);
+  --aurora-text-gradient: linear-gradient(90deg, #34d399 0%, #22d3ee 35%, #60a5fa 70%, #e879f9 100%);
+  --shadow-card: 0 14px 36px rgba(0, 0, 0, 0.5);
+  --aurora-glow: 0 10px 30px -4px rgba(16, 185, 129, 0.35), 0 6px 22px -2px rgba(168, 85, 247, 0.38);
 }
 
-/* 1. Dasar halaman & font */
+/* 1. Dasar halaman: #root wajib transparan agar cahaya Aurora terlihat */
 html,
-body,
-#root {
+body {
   background-color: var(--bg-page) !important;
   color: var(--text-main) !important;
   font-family: 'Plus Jakarta Sans', system-ui, -apple-system, sans-serif;
@@ -41,12 +40,13 @@ body,
   transition: background-color 0.25s ease, color 0.25s ease;
 }
 
-:root[data-theme='dark'] body::before,
-:root[data-theme='dark'] body::after {
-  opacity: 0.48;
+#root,
+.app {
+  background: transparent !important;
+  min-height: 100vh;
 }
 
-/* 2. Wrapper layout transparan agar pendaran Aurora terlihat */
+/* 2. Wrapper layout transparan agar pendaran Aurora tembus */
 :root[data-theme='dark'] main,
 :root[data-theme='dark'] section,
 :root[data-theme='dark'] article,
@@ -58,17 +58,82 @@ body,
   border-color: var(--border-color) !important;
 }
 
-/* 3. Navbar & Logo Gradien Aurora */
-:root[data-theme='dark'] header,
-:root[data-theme='dark'] .navbar {
-  background: rgba(6, 9, 24, 0.72) !important;
-  backdrop-filter: blur(18px) !important;
-  -webkit-backdrop-filter: blur(18px) !important;
-  border-bottom: 1px solid rgba(139, 92, 246, 0.22) !important;
+/* 3. HEADER LIQUID GLASS (Light & Dark Mode) */
+header.navbar,
+.navbar {
+  position: sticky !important;
+  top: 12px !important;
+  z-index: 30 !important;
+  width: calc(100% - 32px) !important;
+  margin: 12px auto 0 !important;
+  border-radius: 999px !important;
+  overflow: hidden !important;
+  background: linear-gradient(
+    135deg,
+    rgba(255, 255, 255, 0.56) 0%,
+    rgba(235, 246, 255, 0.32) 50%,
+    rgba(255, 255, 255, 0.5) 100%
+  ) !important;
+  backdrop-filter: blur(28px) saturate(210%) !important;
+  -webkit-backdrop-filter: blur(28px) saturate(210%) !important;
+  border: 1px solid rgba(99, 102, 241, 0.26) !important;
+  box-shadow:
+    inset 0 2px 2px rgba(255, 255, 255, 0.96),
+    inset 0 -2px 4px rgba(56, 189, 248, 0.22),
+    inset 1px 0 2px rgba(255, 255, 255, 0.85),
+    0 12px 32px -4px rgba(15, 23, 42, 0.12),
+    0 4px 14px rgba(59, 130, 246, 0.1) !important;
 }
 
-:root[data-theme='dark'] nav {
+/* Kilau kaca cembung bagian atas */
+header.navbar::before,
+.navbar::before {
+  content: "" !important;
+  position: absolute !important;
+  inset: 0 !important;
+  border-radius: inherit !important;
+  background: linear-gradient(
+    180deg,
+    rgba(255, 255, 255, 0.55) 0%,
+    rgba(255, 255, 255, 0.12) 46%,
+    transparent 52%
+  ) !important;
+  pointer-events: none !important;
+  z-index: 0 !important;
+}
+
+:root[data-theme='dark'] header.navbar,
+:root[data-theme='dark'] .navbar {
+  background: linear-gradient(
+    135deg,
+    rgba(255, 255, 255, 0.14) 0%,
+    rgba(13, 20, 42, 0.42) 50%,
+    rgba(56, 189, 248, 0.1) 100%
+  ) !important;
+  border: 1px solid rgba(255, 255, 255, 0.25) !important;
+  box-shadow:
+    inset 0 2px 2px rgba(255, 255, 255, 0.42),
+    inset 0 -2px 4px rgba(168, 85, 247, 0.24),
+    0 14px 40px rgba(0, 0, 0, 0.48) !important;
+}
+
+:root[data-theme='dark'] header.navbar::before,
+:root[data-theme='dark'] .navbar::before {
+  background: linear-gradient(
+    180deg,
+    rgba(255, 255, 255, 0.2) 0%,
+    rgba(255, 255, 255, 0.04) 46%,
+    transparent 52%
+  ) !important;
+}
+
+header.navbar nav,
+.navbar nav {
   background: transparent !important;
+  border: none !important;
+  outline: none !important;
+  box-shadow: none !important;
+  padding: 0 !important;
 }
 
 :root[data-theme='dark'] .logo {
@@ -82,16 +147,16 @@ body,
 :root[data-theme='dark'] .cards3.flat,
 :root[data-theme='dark'] .matrix-card {
   background: var(--bg-card) !important;
-  backdrop-filter: blur(16px) !important;
-  -webkit-backdrop-filter: blur(16px) !important;
+  backdrop-filter: blur(20px) !important;
+  -webkit-backdrop-filter: blur(20px) !important;
   color: var(--text-main) !important;
-  border: 1px solid rgba(148, 163, 184, 0.16) !important;
-  box-shadow: var(--shadow-card) !important;
+  border: 1px solid rgba(255, 255, 255, 0.12) !important;
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.1), var(--shadow-card) !important;
 }
 
 :root[data-theme='dark'] .card:hover {
-  border-color: rgba(139, 92, 246, 0.4) !important;
-  box-shadow: var(--aurora-glow) !important;
+  border-color: rgba(56, 189, 248, 0.42) !important;
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.16), var(--aurora-glow) !important;
 }
 
 /* 5. Tipografi & Teks Gradien */
@@ -120,7 +185,7 @@ body,
 }
 
 :root[data-theme='dark'] svg.accent {
-  color: #38bdf8 !important;
+  color: #22d3ee !important;
   -webkit-text-fill-color: initial !important;
   background: none !important;
 }
@@ -130,34 +195,55 @@ body,
 }
 
 /* 6. Tombol & Pill Algoritma */
-:root[data-theme='dark'] .nav-link,
 :root[data-theme='dark'] .btn-ghost,
 :root[data-theme='dark'] .pill {
-  background: rgba(23, 33, 61, 0.72) !important;
+  background: rgba(20, 30, 60, 0.65) !important;
   color: var(--text-main) !important;
-  border: 1px solid rgba(148, 163, 184, 0.2) !important;
+  border: 1px solid rgba(255, 255, 255, 0.14) !important;
+  backdrop-filter: blur(12px);
 }
 
-:root[data-theme='dark'] .nav-link {
+header.navbar .nav-link:not(.active),
+.navbar .nav-link:not(.active) {
   background: transparent !important;
-  border-color: transparent !important;
+  border: none !important;
+  outline: none !important;
+  box-shadow: none !important;
 }
 
-:root[data-theme='dark'] .nav-link:hover,
+:root[data-theme='dark'] header.navbar .nav-link:not(.active),
+:root[data-theme='dark'] .navbar .nav-link:not(.active) {
+  color: var(--text-main) !important;
+}
+
+header.navbar .nav-link:not(.active):hover,
+.navbar .nav-link:not(.active):hover {
+  background: rgba(56, 189, 248, 0.14) !important;
+}
+
+:root[data-theme='dark'] header.navbar .nav-link:not(.active):hover,
+:root[data-theme='dark'] .navbar .nav-link:not(.active):hover {
+  background: rgba(255, 255, 255, 0.12) !important;
+}
+
 :root[data-theme='dark'] .btn-ghost:hover:not(:disabled),
 :root[data-theme='dark'] .pill:hover {
-  background: rgba(56, 189, 248, 0.16) !important;
+  background: rgba(56, 189, 248, 0.18) !important;
   border-color: rgba(56, 189, 248, 0.45) !important;
 }
 
-:root[data-theme='dark'] .nav-link.active,
+header.navbar .nav-link.active,
+.nav-link.active,
 :root[data-theme='dark'] .btn-primary,
 :root[data-theme='dark'] .btn-dark,
 :root[data-theme='dark'] .pill.on {
   background: var(--aurora-gradient) !important;
   border-color: transparent !important;
   color: #ffffff !important;
-  box-shadow: var(--aurora-glow) !important;
+  box-shadow:
+    inset 0 1.5px 1px rgba(255, 255, 255, 0.52),
+    inset 0 -1px 2px rgba(0, 0, 0, 0.22),
+    var(--aurora-glow) !important;
 }
 
 :root[data-theme='dark'] .btn-primary:hover:not(:disabled),
@@ -185,9 +271,9 @@ body,
 }
 
 :root[data-theme='dark'] .slot.replaced {
-  background: rgba(139, 92, 246, 0.24) !important;
+  background: rgba(168, 85, 247, 0.24) !important;
   border-color: #a855f7 !important;
-  color: #d8b4fe !important;
+  color: #e9d5ff !important;
 }
 
 :root[data-theme='dark'] .slot.hit {
@@ -197,21 +283,21 @@ body,
 }
 
 :root[data-theme='dark'] .alert.info {
-  background: rgba(59, 130, 246, 0.14) !important;
-  border-color: rgba(56, 189, 248, 0.28) !important;
+  background: rgba(59, 130, 246, 0.16) !important;
+  border-color: rgba(56, 189, 248, 0.3) !important;
   color: #bae6fd !important;
 }
 
 :root[data-theme='dark'] .alert.success {
-  background: rgba(16, 185, 129, 0.16) !important;
-  border-color: rgba(16, 185, 129, 0.35) !important;
+  background: rgba(16, 185, 129, 0.18) !important;
+  border-color: rgba(16, 185, 129, 0.38) !important;
   color: #6ee7b7 !important;
 }
 
 :root[data-theme='dark'] .alert.fault {
-  background: rgba(139, 92, 246, 0.18) !important;
-  border-color: rgba(168, 85, 247, 0.38) !important;
-  color: #e9d5ff !important;
+  background: rgba(168, 85, 247, 0.2) !important;
+  border-color: rgba(168, 85, 247, 0.4) !important;
+  color: #f3e8ff !important;
 }
 
 :root[data-theme='dark'] .alert.error {
@@ -221,21 +307,21 @@ body,
 }
 
 :root[data-theme='dark'] .history li.current {
-  background: rgba(56, 189, 248, 0.16) !important;
-  border-color: rgba(56, 189, 248, 0.35) !important;
+  background: rgba(56, 189, 248, 0.18) !important;
+  border-color: rgba(56, 189, 248, 0.38) !important;
 }
 
 /* 8. Form Input & Tabel Matriks di Dark Mode */
 :root[data-theme='dark'] input,
 :root[data-theme='dark'] select,
 :root[data-theme='dark'] textarea {
-  background: rgba(10, 15, 32, 0.82) !important;
+  background: rgba(10, 15, 32, 0.78) !important;
   color: var(--text-main) !important;
   border-color: rgba(148, 163, 184, 0.25) !important;
 }
 
 :root[data-theme='dark'] .matrix-scroll {
-  background: rgba(10, 15, 32, 0.75) !important;
+  background: rgba(10, 15, 32, 0.72) !important;
   border-color: rgba(148, 163, 184, 0.2) !important;
 }
 
@@ -246,11 +332,11 @@ body,
 }
 
 :root[data-theme='dark'] .matrix-table thead tr th {
-  background: rgba(15, 23, 42, 0.92) !important;
+  background: rgba(15, 23, 42, 0.9) !important;
 }
 
 :root[data-theme='dark'] .matrix-table .sub-header-row th {
-  background: rgba(23, 33, 61, 0.9) !important;
+  background: rgba(23, 33, 61, 0.88) !important;
 }
 
 :root[data-theme='dark'] .matrix-table .sticky-col {
@@ -276,8 +362,8 @@ body,
 }
 
 :root[data-theme='dark'] .matrix-cell.cell-replaced {
-  background: rgba(139, 92, 246, 0.24) !important;
-  color: #d8b4fe !important;
+  background: rgba(168, 85, 247, 0.24) !important;
+  color: #e9d5ff !important;
 }
 
 :root[data-theme='dark'] .matrix-cell.cell-hit {
@@ -285,40 +371,56 @@ body,
   color: #67e8f9 !important;
 }
 
-/* 9. Tombol Switcher Light / Dark */
+/* 9. Tombol Switcher Light / Dark (Kapsul Liquid Glass sejajar tengah di sebelah kiri Mulai Simulasi) */
 .theme-toggle-btn {
-  position: fixed;
-  top: 13px;
-  right: 205px;
-  z-index: 9999;
-  display: inline-flex;
-  align-items: center;
-  gap: 6px;
-  padding: 8px 14px;
-  border-radius: 999px;
-  border: 1px solid rgba(139, 92, 246, 0.35);
-  background: var(--bg-elevated) !important;
-  backdrop-filter: blur(12px);
-  color: var(--text-main) !important;
-  font-family: inherit;
-  font-size: 0.82rem;
-  font-weight: 600;
-  cursor: pointer;
-  box-shadow: var(--shadow-card);
-  transition: transform 0.15s ease, border-color 0.25s ease, box-shadow 0.25s ease;
+  position: fixed !important;
+  top: 23px !important;
+  right: 215px !important;
+  z-index: 9999 !important;
+  display: inline-flex !important;
+  align-items: center !important;
+  gap: 6px !important;
+  height: 42px !important;
+  padding: 0 16px !important;
+  border-radius: 999px !important;
+  border: 1px solid rgba(99, 102, 241, 0.28) !important;
+  background: rgba(255, 255, 255, 0.55) !important;
+  backdrop-filter: blur(18px) saturate(190%) !important;
+  -webkit-backdrop-filter: blur(18px) saturate(190%) !important;
+  color: #0f172a !important;
+  font-family: inherit !important;
+  font-size: 0.84rem !important;
+  font-weight: 600 !important;
+  cursor: pointer !important;
+  box-shadow:
+    inset 0 1.5px 1px rgba(255, 255, 255, 0.95),
+    0 4px 14px rgba(15, 23, 42, 0.08) !important;
+  transition: transform 0.15s ease, border-color 0.25s ease, box-shadow 0.25s ease, background 0.25s ease !important;
+}
+
+:root[data-theme='dark'] .theme-toggle-btn {
+  background: rgba(255, 255, 255, 0.1) !important;
+  border: 1px solid rgba(255, 255, 255, 0.28) !important;
+  color: #f8fafc !important;
+  box-shadow:
+    inset 0 1.5px 1px rgba(255, 255, 255, 0.42),
+    inset 0 -1px 2px rgba(56, 189, 248, 0.2),
+    0 4px 16px rgba(0, 0, 0, 0.28) !important;
 }
 
 .theme-toggle-btn:hover {
-  transform: translateY(-1px);
-  border-color: #38bdf8 !important;
-  box-shadow: var(--aurora-glow);
+  transform: translateY(-1px) !important;
+  border-color: #22d3ee !important;
+  box-shadow:
+    inset 0 1.5px 1px rgba(255, 255, 255, 0.5),
+    var(--aurora-glow) !important;
 }
 
-@media (max-width: 960px) {
+@media (max-width: 1120px) {
   .theme-toggle-btn {
-    top: auto;
-    bottom: 18px;
-    left: 18px;
-    right: auto;
+    top: auto !important;
+    bottom: 18px !important;
+    left: 18px !important;
+    right: auto !important;
   }
 }

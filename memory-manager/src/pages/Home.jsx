@@ -1,13 +1,49 @@
 import { BarChart3, Info, Lightbulb, Play, Settings, Zap, Keyboard, ClipboardCheck } from 'lucide-react'
-const FEATURES = [[Zap, 'Simulasi Interaktif', 'Lihat proses penggantian data secara langsung'], [BarChart3, 'Bandingkan Algoritma', 'Ketahui perbedaan FIFO, LRU, dan Optimal'], [Lightbulb, 'Mudah Dipahami', 'Cocok untuk pemula maupun yang ingin belajar lebih']]
-const STEPS = [[Keyboard, 'Atur Jumlah Slot Memori dan Masukkan Data', 'Tentukan kapasitas memori dan urutan data yang diinginkan.'], [Settings, 'Pilih Algoritma', 'Gunakan FIFO, LRU, atau Optimal.'], [ClipboardCheck, 'Lihat Hasilnya', 'Amati proses dan bandingkan jumlah page fault dan hit.']]
+
+const FEATURES = [
+  [Zap, 'Simulasi Interaktif', 'Lihat proses penggantian data secara langsung'],
+  [BarChart3, 'Bandingkan Algoritma', 'Ketahui perbedaan FIFO, LRU, dan Optimal'],
+  [Lightbulb, 'Mudah Dipahami', 'Cocok untuk pemula maupun yang ingin belajar lebih'],
+]
+
+const STEPS = [
+  [Keyboard, 'Atur Jumlah Slot Memori dan Masukkan Data', 'Tentukan kapasitas memori dan urutan data yang diinginkan.'],
+  [Settings, 'Pilih Algoritma', 'Gunakan FIFO, LRU, atau Optimal.'],
+  [ClipboardCheck, 'Lihat Hasilnya', 'Amati proses dan bandingkan jumlah page fault dan hit.'],
+]
 
 function Ram() {
   return (
     <svg viewBox="0 0 300 130" className="ram" role="img" aria-label="Ilustrasi RAM">
-      <rect x="5" y="15" width="290" height="85" rx="10" fill="#22a06b" />
-      {[0, 1, 2, 3, 4].map((i) => <rect key={i} x={25 + i * 54} y="32" width="40" height="40" rx="6" fill="#1c2b4a" />)}
-      {Array.from({ length: 24 }).map((_, i) => <rect key={i} x={14 + i * 11.8} y="100" width="7" height="18" fill="#f5c542" />)}
+      <defs>
+        <linearGradient id="auroraBoard" x1="0%" y1="0%" x2="100%" y2="100%">
+          <stop offset="0%" stopColor="#10b981" />
+          <stop offset="50%" stopColor="#06b6d4" />
+          <stop offset="100%" stopColor="#8b5cf6" />
+        </linearGradient>
+        <linearGradient id="auroraPins" x1="0%" y1="0%" x2="100%" y2="0%">
+          <stop offset="0%" stopColor="#34d399" />
+          <stop offset="50%" stopColor="#38bdf8" />
+          <stop offset="100%" stopColor="#c084fc" />
+        </linearGradient>
+      </defs>
+      <rect x="5" y="15" width="290" height="85" rx="12" fill="url(#auroraBoard)" />
+      {[0, 1, 2, 3, 4].map((i) => (
+        <rect
+          key={i}
+          x={25 + i * 54}
+          y="32"
+          width="40"
+          height="40"
+          rx="7"
+          fill="#0b1228"
+          stroke="rgba(255,255,255,0.28)"
+          strokeWidth="1.5"
+        />
+      ))}
+      {Array.from({ length: 24 }).map((_, i) => (
+        <rect key={i} x={14 + i * 11.8} y="100" width="7" height="18" rx="1.5" fill="url(#auroraPins)" />
+      ))}
     </svg>
   )
 }
