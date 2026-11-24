@@ -1,12 +1,15 @@
 import { useState, useEffect, useRef } from "react";
 
+const rawBase = import.meta.env.BASE_URL || "/";
+const BASE = rawBase.endsWith("/") ? rawBase : `${rawBase}/`;
+
 const ANGGOTA = [
-  { nama: "Chalisa Adelia Putri", npm: "257006111072", foto: "chalisa.jpg", warna: "blue", posisi: "center 32%" },
+  { nama: "Chalisa Adelia Putri", npm: "257006111072", foto: "chalisa.jpeg", warna: "blue", posisi: "center 32%" },
   { nama: "Muhammad Faishal Akrom", npm: "257006111079", foto: "faishal.jpeg", warna: "green", posisi: "center 55%" },
   { nama: "Hilmi Juliansyah", npm: "257006111080", foto: "hilmi.jpeg", warna: "orange", posisi: "center 35%" },
   { nama: "Muhammad Alfaridzi Hudmawan", npm: "257006111085", foto: "alpa.jpeg", warna: "blue", posisi: "center 58%" },
-  { nama: "Muhammad Fatan Labiha", npm: "257006111093", foto: "fatan.jpg", warna: "green", posisi: "center 62%" },
-  { nama: "Rakha Fauzan Nughraha", npm: "257006111083", foto: "rakha.jpg", musik: "/foto/rakha.mpeg", warna: "orange", posisi: "center 38%" },
+  { nama: "Muhammad Fatan Labiha", npm: "257006111093", foto: "fatan.jpeg", warna: "green", posisi: "center 62%" },
+  { nama: "Rakha Fauzan Nughraha", npm: "257006111083", foto: "rakha.jpg", musik: `${BASE}foto/rakha.mpeg`, warna: "orange", posisi: "center 38%" },
 ];
 
 const inisial = (nama) =>
@@ -22,7 +25,7 @@ export default function AboutUs() {
   const audioRef = useRef(null);
   const fadeTimerRef = useRef(null);
 
-  const getFotoUrl = (anggota) => `/foto/${resolvedSrc[anggota.npm] || anggota.foto}`;
+  const getFotoUrl = (anggota) => `${BASE}foto/${resolvedSrc[anggota.npm] || anggota.foto}`;
 
   const handleImgError = (anggota) => {
     const currentFile = resolvedSrc[anggota.npm] || anggota.foto;
