@@ -17,16 +17,16 @@
 /* Variabel Saat Aurora Dark Mode Aktif */
 :root[data-theme='dark'] {
   --bg-page: #050816;
-  --bg-card: rgba(13, 20, 42, 0.52);
-  --bg-elevated: rgba(22, 33, 66, 0.72);
+  --bg-card: rgba(13, 20, 42, 0.42);
+  --bg-elevated: rgba(22, 33, 66, 0.58);
   --text-main: #f8fafc;
   --text-muted: #cbd5e1;
-  --border-color: rgba(148, 163, 184, 0.2);
+  --border-color: rgba(255, 255, 255, 0.22);
   --accent-color: #38bdf8;
   --aurora-gradient: linear-gradient(135deg, #10b981 0%, #06b6d4 35%, #3b82f6 68%, #a855f7 100%);
   --aurora-gradient-hover: linear-gradient(135deg, #34d399 0%, #22d3ee 35%, #60a5fa 68%, #c084fc 100%);
   --aurora-text-gradient: linear-gradient(90deg, #34d399 0%, #22d3ee 35%, #60a5fa 70%, #e879f9 100%);
-  --shadow-card: 0 14px 36px rgba(0, 0, 0, 0.5);
+  --shadow-card: 0 16px 40px rgba(0, 0, 0, 0.48);
   --aurora-glow: 0 10px 30px -4px rgba(16, 185, 129, 0.35), 0 6px 22px -2px rgba(168, 85, 247, 0.38);
 }
 
@@ -58,7 +58,7 @@ body {
   border-color: var(--border-color) !important;
 }
 
-/* 3. HEADER LIQUID GLASS (Light & Dark Mode) */
+/* 3. HEADER LIQUID GLASS (Tetap Utuh) */
 header.navbar,
 .navbar {
   position: sticky !important;
@@ -85,7 +85,6 @@ header.navbar,
     0 4px 14px rgba(59, 130, 246, 0.1) !important;
 }
 
-/* Kilau kaca cembung bagian atas */
 header.navbar::before,
 .navbar::before {
   content: "" !important;
@@ -142,21 +141,62 @@ header.navbar nav,
   -webkit-text-fill-color: transparent !important;
 }
 
-/* 4. Kartu Glassmorphism */
+/* 4. SEMUA KOTAK PEMBUNGKUS MENJADI LIQUID GLASS */
 :root[data-theme='dark'] .card,
 :root[data-theme='dark'] .cards3.flat,
 :root[data-theme='dark'] .matrix-card {
-  background: var(--bg-card) !important;
-  backdrop-filter: blur(20px) !important;
-  -webkit-backdrop-filter: blur(20px) !important;
+  position: relative !important;
+  overflow: hidden !important;
+  background: linear-gradient(
+    145deg,
+    rgba(255, 255, 255, 0.13) 0%,
+    rgba(13, 20, 42, 0.34) 52%,
+    rgba(56, 189, 248, 0.09) 100%
+  ) !important;
+  backdrop-filter: blur(26px) saturate(200%) !important;
+  -webkit-backdrop-filter: blur(26px) saturate(200%) !important;
   color: var(--text-main) !important;
-  border: 1px solid rgba(255, 255, 255, 0.12) !important;
-  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.1), var(--shadow-card) !important;
+  border: 1px solid rgba(255, 255, 255, 0.24) !important;
+  box-shadow:
+    inset 0 1.5px 1.5px rgba(255, 255, 255, 0.38),
+    inset 0 -2px 5px rgba(56, 189, 248, 0.16),
+    inset 1px 0 1px rgba(255, 255, 255, 0.18),
+    var(--shadow-card) !important;
+}
+
+:root[data-theme='dark'] .card::before,
+:root[data-theme='dark'] .cards3.flat::before,
+:root[data-theme='dark'] .matrix-card::before {
+  content: "" !important;
+  position: absolute !important;
+  top: 0 !important;
+  left: 3% !important;
+  right: 3% !important;
+  height: 36% !important;
+  border-radius: 0 0 50% 50% !important;
+  background: linear-gradient(
+    180deg,
+    rgba(255, 255, 255, 0.15) 0%,
+    rgba(255, 255, 255, 0.02) 72%,
+    transparent 100%
+  ) !important;
+  pointer-events: none !important;
+  z-index: 0 !important;
+}
+
+:root[data-theme='dark'] .card > *,
+:root[data-theme='dark'] .cards3.flat > *,
+:root[data-theme='dark'] .matrix-card > * {
+  position: relative;
+  z-index: 1;
 }
 
 :root[data-theme='dark'] .card:hover {
-  border-color: rgba(56, 189, 248, 0.42) !important;
-  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.16), var(--aurora-glow) !important;
+  border-color: rgba(56, 189, 248, 0.48) !important;
+  box-shadow:
+    inset 0 1.5px 1.5px rgba(255, 255, 255, 0.48),
+    inset 0 -2px 6px rgba(168, 85, 247, 0.22),
+    var(--aurora-glow) !important;
 }
 
 /* 5. Tipografi & Teks Gradien */
@@ -194,13 +234,24 @@ header.navbar nav,
   color: #38bdf8 !important;
 }
 
-/* 6. Tombol & Pill Algoritma */
+/* 6. KOMPONEN TOMBOL, PILL ALGORITMA & IKON LIQUID GLASS */
 :root[data-theme='dark'] .btn-ghost,
-:root[data-theme='dark'] .pill {
-  background: rgba(20, 30, 60, 0.65) !important;
+:root[data-theme='dark'] .pill,
+:root[data-theme='dark'] .feature-icon-glass {
+  background: linear-gradient(
+    145deg,
+    rgba(255, 255, 255, 0.14) 0%,
+    rgba(20, 30, 60, 0.36) 55%,
+    rgba(56, 189, 248, 0.08) 100%
+  ) !important;
   color: var(--text-main) !important;
-  border: 1px solid rgba(255, 255, 255, 0.14) !important;
-  backdrop-filter: blur(12px);
+  border: 1px solid rgba(255, 255, 255, 0.24) !important;
+  backdrop-filter: blur(18px) saturate(190%) !important;
+  -webkit-backdrop-filter: blur(18px) saturate(190%) !important;
+  box-shadow:
+    inset 0 1.5px 1px rgba(255, 255, 255, 0.36),
+    inset 0 -1px 2px rgba(56, 189, 248, 0.14),
+    0 4px 14px rgba(0, 0, 0, 0.25) !important;
 }
 
 header.navbar .nav-link:not(.active),
@@ -228,8 +279,15 @@ header.navbar .nav-link:not(.active):hover,
 
 :root[data-theme='dark'] .btn-ghost:hover:not(:disabled),
 :root[data-theme='dark'] .pill:hover {
-  background: rgba(56, 189, 248, 0.18) !important;
-  border-color: rgba(56, 189, 248, 0.45) !important;
+  background: linear-gradient(
+    145deg,
+    rgba(56, 189, 248, 0.24) 0%,
+    rgba(255, 255, 255, 0.12) 100%
+  ) !important;
+  border-color: rgba(56, 189, 248, 0.5) !important;
+  box-shadow:
+    inset 0 1.5px 1px rgba(255, 255, 255, 0.45),
+    0 6px 18px rgba(6, 182, 212, 0.25) !important;
 }
 
 header.navbar .nav-link.active,
@@ -238,11 +296,11 @@ header.navbar .nav-link.active,
 :root[data-theme='dark'] .btn-dark,
 :root[data-theme='dark'] .pill.on {
   background: var(--aurora-gradient) !important;
-  border-color: transparent !important;
+  border: 1px solid rgba(255, 255, 255, 0.35) !important;
   color: #ffffff !important;
   box-shadow:
-    inset 0 1.5px 1px rgba(255, 255, 255, 0.52),
-    inset 0 -1px 2px rgba(0, 0, 0, 0.22),
+    inset 0 1.5px 1.5px rgba(255, 255, 255, 0.58),
+    inset 0 -1.5px 2px rgba(0, 0, 0, 0.22),
     var(--aurora-glow) !important;
 }
 
@@ -251,108 +309,166 @@ header.navbar .nav-link.active,
   background: var(--aurora-gradient-hover) !important;
 }
 
-/* 7. Slot Memori & Alert di Dark Mode */
+/* 7. KOMPONEN SLOT MEMORI, ALERT & RIWAYAT LIQUID GLASS */
 :root[data-theme='dark'] .slot {
-  background: rgba(59, 130, 246, 0.18) !important;
-  border-color: rgba(96, 165, 250, 0.45) !important;
+  background: linear-gradient(
+    145deg,
+    rgba(255, 255, 255, 0.16) 0%,
+    rgba(59, 130, 246, 0.16) 55%,
+    rgba(56, 189, 248, 0.12) 100%
+  ) !important;
+  border: 1px solid rgba(255, 255, 255, 0.28) !important;
+  backdrop-filter: blur(16px) saturate(180%) !important;
+  -webkit-backdrop-filter: blur(16px) saturate(180%) !important;
+  box-shadow:
+    inset 0 1.5px 1.5px rgba(255, 255, 255, 0.42),
+    inset 0 -1.5px 3px rgba(59, 130, 246, 0.22),
+    0 4px 14px rgba(0, 0, 0, 0.25) !important;
   color: #f8fafc !important;
 }
 
 :root[data-theme='dark'] .slot.empty {
-  background: rgba(15, 23, 42, 0.45) !important;
-  border-color: rgba(148, 163, 184, 0.28) !important;
-  color: #64748b !important;
+  background: linear-gradient(
+    145deg,
+    rgba(255, 255, 255, 0.06) 0%,
+    rgba(15, 23, 42, 0.28) 100%
+  ) !important;
+  border: 1px dashed rgba(255, 255, 255, 0.24) !important;
+  box-shadow: inset 0 1px 1px rgba(255, 255, 255, 0.14) !important;
+  color: #94a3b8 !important;
 }
 
 :root[data-theme='dark'] .slot.fresh {
-  background: rgba(16, 185, 129, 0.22) !important;
-  border-color: #10b981 !important;
+  background: linear-gradient(
+    145deg,
+    rgba(16, 185, 129, 0.3) 0%,
+    rgba(6, 182, 212, 0.16) 100%
+  ) !important;
+  border: 1px solid rgba(52, 211, 153, 0.65) !important;
+  box-shadow:
+    inset 0 1.5px 1.5px rgba(255, 255, 255, 0.45),
+    0 4px 16px rgba(16, 185, 129, 0.28) !important;
   color: #6ee7b7 !important;
 }
 
 :root[data-theme='dark'] .slot.replaced {
-  background: rgba(168, 85, 247, 0.24) !important;
-  border-color: #a855f7 !important;
+  background: linear-gradient(
+    145deg,
+    rgba(168, 85, 247, 0.32) 0%,
+    rgba(236, 72, 153, 0.16) 100%
+  ) !important;
+  border: 1px solid rgba(192, 132, 252, 0.65) !important;
+  box-shadow:
+    inset 0 1.5px 1.5px rgba(255, 255, 255, 0.45),
+    0 4px 16px rgba(168, 85, 247, 0.28) !important;
   color: #e9d5ff !important;
 }
 
 :root[data-theme='dark'] .slot.hit {
-  background: rgba(6, 182, 212, 0.22) !important;
-  border-color: #22d3ee !important;
+  background: linear-gradient(
+    145deg,
+    rgba(6, 182, 212, 0.3) 0%,
+    rgba(59, 130, 246, 0.16) 100%
+  ) !important;
+  border: 1px solid rgba(34, 211, 238, 0.65) !important;
+  box-shadow:
+    inset 0 1.5px 1.5px rgba(255, 255, 255, 0.45),
+    0 4px 16px rgba(6, 182, 212, 0.28) !important;
   color: #67e8f9 !important;
 }
 
+:root[data-theme='dark'] .alert {
+  backdrop-filter: blur(18px) saturate(180%) !important;
+  -webkit-backdrop-filter: blur(18px) saturate(180%) !important;
+  box-shadow: inset 0 1px 1px rgba(255, 255, 255, 0.28) !important;
+}
+
 :root[data-theme='dark'] .alert.info {
-  background: rgba(59, 130, 246, 0.16) !important;
-  border-color: rgba(56, 189, 248, 0.3) !important;
+  background: linear-gradient(135deg, rgba(59, 130, 246, 0.22), rgba(13, 20, 42, 0.4)) !important;
+  border-color: rgba(56, 189, 248, 0.38) !important;
   color: #bae6fd !important;
 }
 
 :root[data-theme='dark'] .alert.success {
-  background: rgba(16, 185, 129, 0.18) !important;
-  border-color: rgba(16, 185, 129, 0.38) !important;
+  background: linear-gradient(135deg, rgba(16, 185, 129, 0.22), rgba(13, 20, 42, 0.4)) !important;
+  border-color: rgba(52, 211, 153, 0.42) !important;
   color: #6ee7b7 !important;
 }
 
 :root[data-theme='dark'] .alert.fault {
-  background: rgba(168, 85, 247, 0.2) !important;
-  border-color: rgba(168, 85, 247, 0.4) !important;
+  background: linear-gradient(135deg, rgba(168, 85, 247, 0.24), rgba(13, 20, 42, 0.4)) !important;
+  border-color: rgba(192, 132, 252, 0.42) !important;
   color: #f3e8ff !important;
 }
 
 :root[data-theme='dark'] .alert.error {
-  background: rgba(239, 68, 68, 0.18) !important;
-  border-color: rgba(239, 68, 68, 0.38) !important;
+  background: linear-gradient(135deg, rgba(239, 68, 68, 0.22), rgba(13, 20, 42, 0.4)) !important;
+  border-color: rgba(248, 113, 113, 0.42) !important;
   color: #fca5a5 !important;
 }
 
-:root[data-theme='dark'] .history li.current {
-  background: rgba(56, 189, 248, 0.18) !important;
-  border-color: rgba(56, 189, 248, 0.38) !important;
+:root[data-theme='dark'] .history li {
+  background: rgba(255, 255, 255, 0.04) !important;
+  border: 1px solid rgba(255, 255, 255, 0.08) !important;
 }
 
-/* 8. Form Input & Tabel Matriks di Dark Mode */
+:root[data-theme='dark'] .history li.current {
+  background: linear-gradient(135deg, rgba(56, 189, 248, 0.22), rgba(139, 92, 246, 0.16)) !important;
+  border: 1px solid rgba(56, 189, 248, 0.45) !important;
+  box-shadow: inset 0 1px 1px rgba(255, 255, 255, 0.3) !important;
+}
+
+/* 8. FORM INPUT & TABEL MATRIKS LIQUID GLASS */
 :root[data-theme='dark'] input,
 :root[data-theme='dark'] select,
 :root[data-theme='dark'] textarea {
-  background: rgba(10, 15, 32, 0.78) !important;
+  background: linear-gradient(
+    145deg,
+    rgba(255, 255, 255, 0.1) 0%,
+    rgba(10, 15, 32, 0.48) 100%
+  ) !important;
+  backdrop-filter: blur(16px) !important;
   color: var(--text-main) !important;
-  border-color: rgba(148, 163, 184, 0.25) !important;
+  border: 1px solid rgba(255, 255, 255, 0.22) !important;
+  box-shadow: inset 0 1px 1px rgba(255, 255, 255, 0.24) !important;
 }
 
 :root[data-theme='dark'] .matrix-scroll {
-  background: rgba(10, 15, 32, 0.72) !important;
-  border-color: rgba(148, 163, 184, 0.2) !important;
+  background: rgba(10, 15, 32, 0.45) !important;
+  backdrop-filter: blur(18px) !important;
+  border: 1px solid rgba(255, 255, 255, 0.2) !important;
+  box-shadow: inset 0 1px 1px rgba(255, 255, 255, 0.2) !important;
 }
 
 :root[data-theme='dark'] .matrix-table th,
 :root[data-theme='dark'] .matrix-table td {
-  border-color: rgba(148, 163, 184, 0.14) !important;
+  border-color: rgba(255, 255, 255, 0.12) !important;
   color: var(--text-main) !important;
 }
 
 :root[data-theme='dark'] .matrix-table thead tr th {
-  background: rgba(15, 23, 42, 0.9) !important;
+  background: rgba(255, 255, 255, 0.08) !important;
 }
 
 :root[data-theme='dark'] .matrix-table .sub-header-row th {
-  background: rgba(23, 33, 61, 0.88) !important;
+  background: rgba(56, 189, 248, 0.08) !important;
 }
 
 :root[data-theme='dark'] .matrix-table .sticky-col {
-  background: #0d1428 !important;
+  background: rgba(13, 20, 42, 0.85) !important;
+  backdrop-filter: blur(14px) !important;
 }
 
 :root[data-theme='dark'] .matrix-table thead .sticky-col {
-  background: #0f172a !important;
+  background: rgba(15, 23, 42, 0.92) !important;
 }
 
 :root[data-theme='dark'] .matrix-table .sub-header-row .sticky-col {
-  background: #16203c !important;
+  background: rgba(22, 32, 60, 0.9) !important;
 }
 
 :root[data-theme='dark'] .matrix-cell.cell-empty {
-  background: rgba(15, 23, 42, 0.4) !important;
+  background: rgba(255, 255, 255, 0.02) !important;
   color: #64748b !important;
 }
 
@@ -371,7 +487,7 @@ header.navbar .nav-link.active,
   color: #67e8f9 !important;
 }
 
-/* 9. Tombol Switcher Light / Dark (Kapsul Liquid Glass sejajar tengah di sebelah kiri Mulai Simulasi) */
+/* 9. Tombol Switcher Light / Dark (Tetap Utuh) */
 .theme-toggle-btn {
   position: fixed !important;
   top: 23px !important;
@@ -423,4 +539,15 @@ header.navbar .nav-link.active,
     left: 18px !important;
     right: auto !important;
   }
+}
+
+/* 10. Ubah warna judul di ujung kiri header menjadi putih */
+:root[data-theme='dark'] header.navbar .logo,
+header.navbar .logo,
+.navbar .logo {
+  background: none !important;
+  background-image: none !important;
+  -webkit-background-clip: border-box !important;
+  -webkit-text-fill-color: #ffffff !important;
+  color: #ffffff !important;
 }
