@@ -3,9 +3,9 @@ import { lru } from './lru.js'
 import { optimal } from './optimal.js'
 
 export const ALGORITHMS = {
-  FIFO: { label: 'FIFO', run: fifo, color: '#3b6fe0' },
+  FIFO: { label: 'FIFO', run: fifo, color: '#06b6d4' },
   LRU: { label: 'LRU', run: lru, color: '#10b981' },
-  Optimal: { label: 'Optimal', run: optimal, color: '#f59e0b' },
+  Optimal: { label: 'Optimal', run: optimal, color: '#8b5cf6' },
 }
 
 export function parseInput(text) {

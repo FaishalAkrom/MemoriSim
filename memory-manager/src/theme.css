@@ -1,28 +1,36 @@
-/* Variabel Default: Light Mode */
+/* Variabel Default: Aurora Light Mode */
 :root {
-  --bg-page: #f1f5f9;
-  --bg-card: #ffffff;
-  --bg-elevated: #e2e8f0;
+  --bg-page: #eef4ff;
+  --bg-card: rgba(255, 255, 255, 0.75);
+  --bg-elevated: rgba(255, 255, 255, 0.88);
   --text-main: #0f172a;
   --text-muted: #475569;
-  --border-color: #cbd5e1;
-  --accent-color: #2563eb;
-  --shadow-card: 0 4px 16px rgba(15, 23, 42, 0.06);
+  --border-color: rgba(99, 102, 241, 0.18);
+  --accent-color: #0284c7;
+  --aurora-gradient: linear-gradient(135deg, #06b6d4 0%, #3b82f6 50%, #8b5cf6 100%);
+  --aurora-gradient-hover: linear-gradient(135deg, #22d3ee 0%, #60a5fa 50%, #a78bfa 100%);
+  --aurora-text-gradient: linear-gradient(90deg, #0284c7 0%, #3b82f6 50%, #8b5cf6 100%);
+  --shadow-card: 0 10px 30px rgba(37, 99, 235, 0.08);
+  --aurora-glow: 0 8px 26px -4px rgba(56, 189, 248, 0.35), 0 4px 16px -2px rgba(139, 92, 246, 0.28);
 }
 
-/* Variabel Saat Dark Mode Aktif */
+/* Variabel Saat Aurora Dark Mode Aktif */
 :root[data-theme='dark'] {
-  --bg-page: #090d16;
-  --bg-card: #111827;
-  --bg-elevated: #1e293b;
+  --bg-page: #060918;
+  --bg-card: rgba(15, 23, 42, 0.62);
+  --bg-elevated: rgba(23, 33, 61, 0.78);
   --text-main: #f8fafc;
-  --text-muted: #cbd5e1;
-  --border-color: #1e293b;
-  --accent-color: #3b82f6;
-  --shadow-card: 0 8px 24px rgba(0, 0, 0, 0.45);
+  --text-muted: #94a3b8;
+  --border-color: rgba(148, 163, 184, 0.16);
+  --accent-color: #38bdf8;
+  --aurora-gradient: linear-gradient(135deg, #06b6d4 0%, #3b82f6 50%, #8b5cf6 100%);
+  --aurora-gradient-hover: linear-gradient(135deg, #22d3ee 0%, #60a5fa 50%, #a78bfa 100%);
+  --aurora-text-gradient: linear-gradient(90deg, #22d3ee 0%, #60a5fa 50%, #c084fc 100%);
+  --shadow-card: 0 12px 32px rgba(0, 0, 0, 0.48);
+  --aurora-glow: 0 10px 30px -6px rgba(56, 189, 248, 0.35), 0 4px 18px -4px rgba(139, 92, 246, 0.32);
 }
 
-/* 1. Hilangkan area putih di pinggir kiri-kanan halaman */
+/* 1. Dasar halaman & font */
 html,
 body,
 #root {
@@ -33,116 +41,251 @@ body,
   transition: background-color 0.25s ease, color 0.25s ease;
 }
 
-/* 2. Bagian utama & wrapper layout transparan mengikuti background gelap */
+:root[data-theme='dark'] body::before,
+:root[data-theme='dark'] body::after {
+  opacity: 0.48;
+}
+
+/* 2. Wrapper layout transparan agar pendaran Aurora terlihat */
 :root[data-theme='dark'] main,
 :root[data-theme='dark'] section,
 :root[data-theme='dark'] article,
 :root[data-theme='dark'] footer,
-:root[data-theme='dark'] [class*='container'],
-:root[data-theme='dark'] [class*='wrapper'],
-:root[data-theme='dark'] [class*='hero'] {
-  background-color: var(--bg-page) !important;
+:root[data-theme='dark'] .page,
+:root[data-theme='dark'] .hero {
+  background-color: transparent !important;
   color: var(--text-main) !important;
   border-color: var(--border-color) !important;
 }
 
-/* 3. Navbar & Header */
+/* 3. Navbar & Logo Gradien Aurora */
 :root[data-theme='dark'] header,
+:root[data-theme='dark'] .navbar {
+  background: rgba(6, 9, 24, 0.72) !important;
+  backdrop-filter: blur(18px) !important;
+  -webkit-backdrop-filter: blur(18px) !important;
+  border-bottom: 1px solid rgba(139, 92, 246, 0.22) !important;
+}
+
 :root[data-theme='dark'] nav {
-  background-color: var(--bg-card) !important;
-  border-color: var(--border-color) !important;
+  background: transparent !important;
 }
 
-:root[data-theme='dark'] [class*='logo'],
-:root[data-theme='dark'] [class*='brand'] {
-  color: #60a5fa !important;
+:root[data-theme='dark'] .logo {
+  background-image: var(--aurora-text-gradient) !important;
+  -webkit-background-clip: text !important;
+  -webkit-text-fill-color: transparent !important;
 }
 
-/* 4. Semua kartu, bingkai fitur bawah, kotak statistik, & slot kosong */
-:root[data-theme='dark'] aside,
+/* 4. Kartu Glassmorphism */
 :root[data-theme='dark'] .card,
-:root[data-theme='dark'] .panel,
-:root[data-theme='dark'] [class*='card'],
-:root[data-theme='dark'] [class*='box'],
-:root[data-theme='dark'] [class*='panel'],
-:root[data-theme='dark'] [class*='feature'],
-:root[data-theme='dark'] [class*='highlight'],
-:root[data-theme='dark'] [class*='banner'],
-:root[data-theme='dark'] [class*='step'],
-:root[data-theme='dark'] [class*='stat'],
-:root[data-theme='dark'] [class*='info'],
-:root[data-theme='dark'] [class*='summary'],
-:root[data-theme='dark'] [class*='modal'],
-:root[data-theme='dark'] [class*='result'],
-:root[data-theme='dark'] [class*='control'],
-:root[data-theme='dark'] [class*='empty'],
-:root[data-theme='dark'] [class*='slot'] {
-  background-color: var(--bg-card) !important;
+:root[data-theme='dark'] .cards3.flat,
+:root[data-theme='dark'] .matrix-card {
+  background: var(--bg-card) !important;
+  backdrop-filter: blur(16px) !important;
+  -webkit-backdrop-filter: blur(16px) !important;
   color: var(--text-main) !important;
-  border-color: #263244 !important;
+  border: 1px solid rgba(148, 163, 184, 0.16) !important;
+  box-shadow: var(--shadow-card) !important;
 }
 
-/* 5. Keterbacaan teks judul & paragraf */
+:root[data-theme='dark'] .card:hover {
+  border-color: rgba(139, 92, 246, 0.4) !important;
+  box-shadow: var(--aurora-glow) !important;
+}
+
+/* 5. Tipografi & Teks Gradien */
 :root[data-theme='dark'] h1,
 :root[data-theme='dark'] h2,
 :root[data-theme='dark'] h3,
 :root[data-theme='dark'] h4,
 :root[data-theme='dark'] strong,
-:root[data-theme='dark'] label {
+:root[data-theme='dark'] label,
+:root[data-theme='dark'] .lbl {
   color: var(--text-main) !important;
 }
 
 :root[data-theme='dark'] p,
-:root[data-theme='dark'] li {
+:root[data-theme='dark'] li,
+:root[data-theme='dark'] dd,
+:root[data-theme='dark'] small,
+:root[data-theme='dark'] .sub {
   color: var(--text-muted) !important;
 }
 
-/* 6. Tombol sekunder (Pelajari Lebih Lanjut, LRU, Optimal) vs Tombol aktif (Biru) */
-:root[data-theme='dark'] button,
-:root[data-theme='dark'] a[class*='btn'],
-:root[data-theme='dark'] a[class*='button'] {
-  background-color: var(--bg-elevated) !important;
+:root[data-theme='dark'] .accent {
+  background: var(--aurora-text-gradient) !important;
+  -webkit-background-clip: text !important;
+  -webkit-text-fill-color: transparent !important;
+}
+
+:root[data-theme='dark'] svg.accent {
+  color: #38bdf8 !important;
+  -webkit-text-fill-color: initial !important;
+  background: none !important;
+}
+
+:root[data-theme='dark'] dt {
+  color: #38bdf8 !important;
+}
+
+/* 6. Tombol & Pill Algoritma */
+:root[data-theme='dark'] .nav-link,
+:root[data-theme='dark'] .btn-ghost,
+:root[data-theme='dark'] .pill {
+  background: rgba(23, 33, 61, 0.72) !important;
   color: var(--text-main) !important;
-  border-color: #334155 !important;
+  border: 1px solid rgba(148, 163, 184, 0.2) !important;
 }
 
-:root[data-theme='dark'] button:hover:not(:disabled) {
-  background-color: #283548 !important;
+:root[data-theme='dark'] .nav-link {
+  background: transparent !important;
+  border-color: transparent !important;
 }
 
-:root[data-theme='dark'] button.active,
-:root[data-theme='dark'] button[class*='active'],
-:root[data-theme='dark'] button[class*='primary'],
-:root[data-theme='dark'] a[class*='active'],
-:root[data-theme='dark'] a[class*='primary'],
-:root[data-theme='dark'] .btn-primary {
-  background-color: #2563eb !important;
-  border-color: #3b82f6 !important;
+:root[data-theme='dark'] .nav-link:hover,
+:root[data-theme='dark'] .btn-ghost:hover:not(:disabled),
+:root[data-theme='dark'] .pill:hover {
+  background: rgba(56, 189, 248, 0.16) !important;
+  border-color: rgba(56, 189, 248, 0.45) !important;
+}
+
+:root[data-theme='dark'] .nav-link.active,
+:root[data-theme='dark'] .btn-primary,
+:root[data-theme='dark'] .btn-dark,
+:root[data-theme='dark'] .pill.on {
+  background: var(--aurora-gradient) !important;
+  border-color: transparent !important;
   color: #ffffff !important;
+  box-shadow: var(--aurora-glow) !important;
 }
 
-/* 7. Form Input & Tabel */
+:root[data-theme='dark'] .btn-primary:hover:not(:disabled),
+:root[data-theme='dark'] .btn-dark:hover:not(:disabled) {
+  background: var(--aurora-gradient-hover) !important;
+}
+
+/* 7. Slot Memori & Alert di Dark Mode */
+:root[data-theme='dark'] .slot {
+  background: rgba(59, 130, 246, 0.18) !important;
+  border-color: rgba(96, 165, 250, 0.45) !important;
+  color: #f8fafc !important;
+}
+
+:root[data-theme='dark'] .slot.empty {
+  background: rgba(15, 23, 42, 0.45) !important;
+  border-color: rgba(148, 163, 184, 0.28) !important;
+  color: #64748b !important;
+}
+
+:root[data-theme='dark'] .slot.fresh {
+  background: rgba(16, 185, 129, 0.22) !important;
+  border-color: #10b981 !important;
+  color: #6ee7b7 !important;
+}
+
+:root[data-theme='dark'] .slot.replaced {
+  background: rgba(139, 92, 246, 0.24) !important;
+  border-color: #a855f7 !important;
+  color: #d8b4fe !important;
+}
+
+:root[data-theme='dark'] .slot.hit {
+  background: rgba(6, 182, 212, 0.22) !important;
+  border-color: #22d3ee !important;
+  color: #67e8f9 !important;
+}
+
+:root[data-theme='dark'] .alert.info {
+  background: rgba(59, 130, 246, 0.14) !important;
+  border-color: rgba(56, 189, 248, 0.28) !important;
+  color: #bae6fd !important;
+}
+
+:root[data-theme='dark'] .alert.success {
+  background: rgba(16, 185, 129, 0.16) !important;
+  border-color: rgba(16, 185, 129, 0.35) !important;
+  color: #6ee7b7 !important;
+}
+
+:root[data-theme='dark'] .alert.fault {
+  background: rgba(139, 92, 246, 0.18) !important;
+  border-color: rgba(168, 85, 247, 0.38) !important;
+  color: #e9d5ff !important;
+}
+
+:root[data-theme='dark'] .alert.error {
+  background: rgba(239, 68, 68, 0.18) !important;
+  border-color: rgba(239, 68, 68, 0.38) !important;
+  color: #fca5a5 !important;
+}
+
+:root[data-theme='dark'] .history li.current {
+  background: rgba(56, 189, 248, 0.16) !important;
+  border-color: rgba(56, 189, 248, 0.35) !important;
+}
+
+/* 8. Form Input & Tabel Matriks di Dark Mode */
 :root[data-theme='dark'] input,
 :root[data-theme='dark'] select,
 :root[data-theme='dark'] textarea {
-  background-color: #0f172a !important;
+  background: rgba(10, 15, 32, 0.82) !important;
   color: var(--text-main) !important;
-  border-color: #334155 !important;
+  border-color: rgba(148, 163, 184, 0.25) !important;
 }
 
-:root[data-theme='dark'] table,
-:root[data-theme='dark'] th,
-:root[data-theme='dark'] td {
-  background-color: var(--bg-card) !important;
+:root[data-theme='dark'] .matrix-scroll {
+  background: rgba(10, 15, 32, 0.75) !important;
+  border-color: rgba(148, 163, 184, 0.2) !important;
+}
+
+:root[data-theme='dark'] .matrix-table th,
+:root[data-theme='dark'] .matrix-table td {
+  border-color: rgba(148, 163, 184, 0.14) !important;
   color: var(--text-main) !important;
-  border-color: var(--border-color) !important;
 }
 
-:root[data-theme='dark'] th {
-  background-color: #0f172a !important;
+:root[data-theme='dark'] .matrix-table thead tr th {
+  background: rgba(15, 23, 42, 0.92) !important;
 }
 
-/* 8. Tombol Switcher Light / Dark di Sebelah Kiri "Mulai Simulasi" */
+:root[data-theme='dark'] .matrix-table .sub-header-row th {
+  background: rgba(23, 33, 61, 0.9) !important;
+}
+
+:root[data-theme='dark'] .matrix-table .sticky-col {
+  background: #0d1428 !important;
+}
+
+:root[data-theme='dark'] .matrix-table thead .sticky-col {
+  background: #0f172a !important;
+}
+
+:root[data-theme='dark'] .matrix-table .sub-header-row .sticky-col {
+  background: #16203c !important;
+}
+
+:root[data-theme='dark'] .matrix-cell.cell-empty {
+  background: rgba(15, 23, 42, 0.4) !important;
+  color: #64748b !important;
+}
+
+:root[data-theme='dark'] .matrix-cell.cell-fresh {
+  background: rgba(16, 185, 129, 0.22) !important;
+  color: #6ee7b7 !important;
+}
+
+:root[data-theme='dark'] .matrix-cell.cell-replaced {
+  background: rgba(139, 92, 246, 0.24) !important;
+  color: #d8b4fe !important;
+}
+
+:root[data-theme='dark'] .matrix-cell.cell-hit {
+  background: rgba(6, 182, 212, 0.22) !important;
+  color: #67e8f9 !important;
+}
+
+/* 9. Tombol Switcher Light / Dark */
 .theme-toggle-btn {
   position: fixed;
   top: 13px;
@@ -153,20 +296,22 @@ body,
   gap: 6px;
   padding: 8px 14px;
   border-radius: 999px;
-  border: 1px solid var(--border-color);
-  background-color: var(--bg-elevated) !important;
+  border: 1px solid rgba(139, 92, 246, 0.35);
+  background: var(--bg-elevated) !important;
+  backdrop-filter: blur(12px);
   color: var(--text-main) !important;
   font-family: inherit;
   font-size: 0.82rem;
   font-weight: 600;
   cursor: pointer;
   box-shadow: var(--shadow-card);
-  transition: transform 0.15s ease, background-color 0.25s ease, color 0.25s ease;
+  transition: transform 0.15s ease, border-color 0.25s ease, box-shadow 0.25s ease;
 }
 
 .theme-toggle-btn:hover {
   transform: translateY(-1px);
-  border-color: var(--accent-color) !important;
+  border-color: #38bdf8 !important;
+  box-shadow: var(--aurora-glow);
 }
 
 @media (max-width: 960px) {

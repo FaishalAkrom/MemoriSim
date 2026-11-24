@@ -1,24 +1,40 @@
 import { useState, useEffect, useRef } from "react";
 
 const ANGGOTA = [
-  { nama: "Chalisa Adelia Putri", npm: "257006111072", foto: "chalisa.jpeg", warna: "blue", posisi: "center 35%" },
+  { nama: "Chalisa Adelia Putri", npm: "257006111072", foto: "chalisa.jpg", warna: "blue", posisi: "center 32%" },
   { nama: "Muhammad Faishal Akrom", npm: "257006111079", foto: "faishal.jpeg", warna: "green", posisi: "center 55%" },
-  { nama: "Hilmi Juliansyah", npm: "257006111080", foto: "hilmi.jpeg", warna: "orange", posisi: "center 40%" },
-  { nama: "Muhammad Alfaridzi Hudmawan", npm: "257006111085", foto: "alpa.jpeg", warna: "blue", posisi: "center 65%" },
-  { nama: "Muhammad Fatan Labiha", npm: "257006111093", foto: "fatan.jpeg", warna: "green", posisi: "center 75%" },
-  { nama: "Rakha Fauzan Nughraha", npm: "257006111083", foto: "rakha.jpg", musik: "/foto/rakha.mpeg", warna: "orange", posisi: "center center" },
+  { nama: "Hilmi Juliansyah", npm: "257006111080", foto: "hilmi.jpeg", warna: "orange", posisi: "center 35%" },
+  { nama: "Muhammad Alfaridzi Hudmawan", npm: "257006111085", foto: "alpa.jpeg", warna: "blue", posisi: "center 58%" },
+  { nama: "Muhammad Fatan Labiha", npm: "257006111093", foto: "fatan.jpg", warna: "green", posisi: "center 62%" },
+  { nama: "Rakha Fauzan Nughraha", npm: "257006111083", foto: "rakha.jpg", musik: "/foto/rakha.mpeg", warna: "orange", posisi: "center 38%" },
 ];
 
 const inisial = (nama) =>
   nama.split(" ").filter(Boolean).slice(0, 2).map((k) => k[0]).join("").toUpperCase();
 
+const swapExt = (file) =>
+  file.endsWith(".jpg") ? file.replace(/\.jpg$/, ".jpeg") : file.replace(/\.jpeg$/, ".jpg");
+
 export default function AboutUs() {
   const [selectedFoto, setSelectedFoto] = useState(null);
+  const [resolvedSrc, setResolvedSrc] = useState({});
+  const [failedImg, setFailedImg] = useState({});
   const audioRef = useRef(null);
   const fadeTimerRef = useRef(null);
 
+  const getFotoUrl = (anggota) => `/foto/${resolvedSrc[anggota.npm] || anggota.foto}`;
+
+  const handleImgError = (anggota) => {
+    const currentFile = resolvedSrc[anggota.npm] || anggota.foto;
+    const altFile = swapExt(anggota.foto);
+    if (currentFile !== altFile) {
+      setResolvedSrc((prev) => ({ ...prev, [anggota.npm]: altFile }));
+    } else {
+      setFailedImg((prev) => ({ ...prev, [anggota.npm]: true }));
+    }
+  };
+
   useEffect(() => {
-    // Bersihkan interval fade & hentikan audio sebelumnya jika ada
     if (fadeTimerRef.current) {
       clearInterval(fadeTimerRef.current);
       fadeTimerRef.current = null;
@@ -29,7 +45,6 @@ export default function AboutUs() {
       audioRef.current = null;
     }
 
-    // Putar musik dengan transisi fade-in dari pelan ke kencang khusus untuk Rakha
     if (selectedFoto?.musik) {
       const audio = new Audio(selectedFoto.musik);
       audio.loop = true;
@@ -49,7 +64,7 @@ export default function AboutUs() {
         .play()
         .then(() => {
           let level = 0.05;
-          const targetGain = 2.5; // Ubah angka ini (misal 3.0 atau 3.5) kalau mau lebih kencang lagi
+          const targetGain = 2.5;
           fadeTimerRef.current = setInterval(() => {
             level = Math.min(targetGain, +(level + 0.12).toFixed(2));
             gainNode.gain.value = level;
@@ -63,7 +78,6 @@ export default function AboutUs() {
           console.warn("Gagal memutar audio:", err);
         });
     }
-    
 
     return () => {
       if (fadeTimerRef.current) {
@@ -91,7 +105,7 @@ export default function AboutUs() {
       <div className="tk-grid">
         {ANGGOTA.map((a) => (
           <article key={a.npm} className={`tk-card tk-member ${a.warna}`}>
-            {a.foto ? (
+            {a.foto && !failedImg[a.npm] ? (
               <div
                 className="tk-foto-wrap"
                 onClick={() => setSelectedFoto(a)}
@@ -99,8 +113,9 @@ export default function AboutUs() {
               >
                 <img
                   className="tk-foto"
-                  src={`/foto/${a.foto}`}
+                  src={getFotoUrl(a)}
                   alt={`Foto ${a.nama}`}
+                  onError={() => handleImgError(a)}
                   style={{ objectPosition: a.posisi || "center center" }}
                 />
                 <span className="tk-zoom-hint">Lihat Penuh</span>
@@ -135,7 +150,7 @@ export default function AboutUs() {
               ✕
             </button>
             <img
-              src={`/foto/${selectedFoto.foto}`}
+              src={getFotoUrl(selectedFoto)}
               alt={`Foto ${selectedFoto.nama}`}
             />
             <div className="tk-modal-caption">
@@ -151,44 +166,52 @@ export default function AboutUs() {
 
 const css = `
 .tk{
-  --navy:#12234a;--blue:#3b6fdc;--green:#10b981;--orange:#f59e0b;--ink:#2d3a5c;
+  --navy:#0f172a;--blue:#06b6d4;--green:#10b981;--orange:#8b5cf6;--ink:#334155;
   max-width:1106px;margin:0 auto;padding:28px 16px 60px;color:var(--ink);
   font-family:inherit
 }
 .tk-head{margin-bottom:24px;display:flex;align-items:flex-end;justify-content:space-between;gap:12px}
 .tk-pill{
-  display:inline-block;padding:5px 12px;border-radius:999px;font-size:.78rem;font-weight:700;
-  letter-spacing:.02em;background:rgba(59,111,220,.12);color:var(--blue);margin-bottom:8px
+  display:inline-block;padding:6px 14px;border-radius:999px;font-size:.78rem;font-weight:700;
+  letter-spacing:.02em;background:rgba(56,189,248,.15);border:1px solid rgba(56,189,248,.35);
+  color:#0284c7;margin-bottom:8px
 }
 .tk-judul{color:var(--navy);font-size:2rem;font-weight:800;margin:0;line-height:1.2}
 
 .tk-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:22px}
-.tk-card{background:#fff;border-radius:20px;box-shadow:0 4px 18px rgba(30,60,140,.08)}
-.tk-member{
-  padding:14px 14px 20px;border-top:5px solid var(--c);
-  display:flex;flex-direction:column;gap:14px;
-  transition:transform .22s ease, box-shadow .22s ease
+.tk-card{
+  background:rgba(255,255,255,.75);backdrop-filter:blur(16px);-webkit-backdrop-filter:blur(16px);
+  border:1px solid rgba(99,102,241,.18);border-radius:20px;box-shadow:0 8px 26px rgba(37,99,235,.08)
 }
-.tk-member:hover{transform:translateY(-4px);box-shadow:0 12px 28px rgba(30,60,140,.14)}
+.tk-member{
+  padding:14px 14px 20px;border-top:4px solid var(--c);
+  display:flex;flex-direction:column;gap:14px;
+  transition:transform .24s ease, box-shadow .24s ease, border-color .24s ease
+}
+.tk-member:hover{
+  transform:translateY(-4px);
+  box-shadow:0 12px 32px rgba(56,189,248,.22), 0 6px 20px rgba(139,92,246,.2)
+}
 .tk-member.blue{--c:var(--blue)}
 .tk-member.green{--c:var(--green)}
 .tk-member.orange{--c:var(--orange)}
 
 .tk-foto-wrap{
   width:100%;height:190px;border-radius:14px;overflow:hidden;
-  cursor:zoom-in;background:#e8edf8;position:relative
+  cursor:zoom-in;background:rgba(15,23,42,.08);position:relative
 }
 .tk-foto{width:100%;height:100%;object-fit:cover;transition:transform .3s ease;display:block}
 .tk-foto-wrap:hover .tk-foto{transform:scale(1.05)}
 .tk-zoom-hint{
   position:absolute;right:10px;bottom:10px;padding:4px 10px;border-radius:999px;
-  background:rgba(15,23,42,.68);color:#fff;font-size:.72rem;font-weight:600;
+  background:linear-gradient(135deg, rgba(6,182,212,.85), rgba(139,92,246,.85));
+  color:#fff;font-size:.72rem;font-weight:600;
   opacity:0;transform:translateY(4px);transition:opacity .2s ease, transform .2s ease;
-  backdrop-filter:blur(4px)
+  backdrop-filter:blur(6px)
 }
 .tk-foto-wrap:hover .tk-zoom-hint{opacity:1;transform:translateY(0)}
 
-.tk-avatar-wrap{width:100%;height:190px;border-radius:14px;background:#f1f5fb;display:grid;place-items:center}
+.tk-avatar-wrap{width:100%;height:190px;border-radius:14px;background:rgba(56,189,248,.12);display:grid;place-items:center}
 .tk-avatar{
   width:64px;height:64px;border-radius:50%;background:var(--c);color:#fff;
   display:grid;place-items:center;font-weight:800;font-size:1.35rem
@@ -198,33 +221,36 @@ const css = `
 .tk-member h3{margin:0;color:var(--navy);font-size:1.06rem;font-weight:700;line-height:1.35}
 .tk-nim{
   display:inline-flex;align-items:center;width:fit-content;
-  font-size:.82rem;font-weight:600;color:#5b6785;
-  background:#f2f5fc;padding:3px 9px;border-radius:8px;margin-top:2px
+  font-size:.82rem;font-weight:600;color:#475569;
+  background:rgba(56,189,248,.12);border:1px solid rgba(56,189,248,.22);
+  padding:3px 9px;border-radius:8px;margin-top:2px
 }
 
 .tk-note{
   margin-top:32px;padding:14px 18px;border-radius:14px;
-  background:#ebe8fb;color:var(--navy);line-height:1.5;font-size:.92rem
+  background:rgba(99,102,241,.12);border:1px solid rgba(99,102,241,.24);
+  color:var(--navy);line-height:1.5;font-size:.92rem
 }
 
-/* Dukungan Dark Mode otomatis mengikuti tema aplikasi */
-body.dark .tk-judul, [data-theme="dark"] .tk-judul{color:#f1f5f9}
-body.dark .tk-pill, [data-theme="dark"] .tk-pill{background:rgba(96,165,250,.18);color:#93c5fd}
-body.dark .tk-card, [data-theme="dark"] .tk-card{background:#162033;box-shadow:0 6px 22px rgba(0,0,0,.35)}
+/* Dukungan Aurora Dark Mode */
+body.dark .tk-judul, [data-theme="dark"] .tk-judul{color:#f8fafc}
+body.dark .tk-pill, [data-theme="dark"] .tk-pill{background:rgba(56,189,248,.15);color:#38bdf8;border-color:rgba(56,189,248,.35)}
+body.dark .tk-card, [data-theme="dark"] .tk-card{background:rgba(15,23,42,.62) !important;border-color:rgba(148,163,184,.16) !important;box-shadow:0 10px 30px rgba(0,0,0,.45)}
 body.dark .tk-member h3, [data-theme="dark"] .tk-member h3{color:#f8fafc}
-body.dark .tk-nim, [data-theme="dark"] .tk-nim{background:#1e293b;color:#94a3b8}
-body.dark .tk-note, [data-theme="dark"] .tk-note{background:#1e2640;color:#cbd5e1}
+body.dark .tk-nim, [data-theme="dark"] .tk-nim{background:rgba(23,33,61,.85);border-color:rgba(148,163,184,.2);color:#94a3b8}
+body.dark .tk-note, [data-theme="dark"] .tk-note{background:rgba(59,130,246,.14);border-color:rgba(56,189,248,.28);color:#cbd5e1}
 
 /* Modal Foto Penuh */
 .tk-modal{
-  position:fixed;inset:0;background:rgba(10,15,28,.85);backdrop-filter:blur(6px);
+  position:fixed;inset:0;background:rgba(6,9,24,.85);backdrop-filter:blur(10px);
   display:grid;place-items:center;padding:20px;z-index:9999;animation:tkFade .18s ease
 }
 .tk-modal-box{
-  position:relative;background:#fff;border-radius:20px;padding:12px;max-width:90vw;max-height:90vh;
-  display:flex;flex-direction:column;align-items:center;box-shadow:0 24px 60px rgba(0,0,0,.5)
+  position:relative;background:rgba(255,255,255,.92);border-radius:20px;padding:12px;max-width:90vw;max-height:90vh;
+  display:flex;flex-direction:column;align-items:center;box-shadow:0 24px 60px rgba(0,0,0,.5);
+  border:1px solid rgba(139,92,246,.35)
 }
-body.dark .tk-modal-box, [data-theme="dark"] .tk-modal-box{background:#162033}
+body.dark .tk-modal-box, [data-theme="dark"] .tk-modal-box{background:rgba(15,23,42,.92)}
 .tk-modal-box img{max-width:100%;max-height:76vh;border-radius:14px;object-fit:contain;display:block}
 .tk-modal-caption{margin-top:12px;text-align:center;display:flex;flex-direction:column;gap:2px}
 .tk-modal-caption strong{color:var(--navy);font-size:1.05rem}
@@ -233,10 +259,10 @@ body.dark .tk-modal-caption strong, [data-theme="dark"] .tk-modal-caption strong
 body.dark .tk-modal-caption span, [data-theme="dark"] .tk-modal-caption span{color:#94a3b8}
 .tk-modal-close{
   position:absolute;top:-14px;right:-14px;width:36px;height:36px;border-radius:50%;
-  border:none;background:var(--navy);color:#fff;font-size:1rem;font-weight:700;cursor:pointer;
-  display:grid;place-items:center;box-shadow:0 4px 12px rgba(0,0,0,.35);transition:background .15s ease
+  border:none;background:linear-gradient(135deg,#06b6d4,#8b5cf6);color:#fff;font-size:1rem;font-weight:700;cursor:pointer;
+  display:grid;place-items:center;box-shadow:0 4px 12px rgba(0,0,0,.35);transition:transform .15s ease
 }
-.tk-modal-close:hover{background:#ef4444}
+.tk-modal-close:hover{transform:scale(1.08)}
 @keyframes tkFade{from{opacity:0}to{opacity:1}}
 
 @media(max-width:900px){.tk-grid{grid-template-columns:repeat(2,1fr)}}
