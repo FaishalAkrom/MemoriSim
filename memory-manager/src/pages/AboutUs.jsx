@@ -8,7 +8,7 @@ const ANGGOTA = [
   { nama: "Muhammad Faishal Akrom", npm: "257006111079", foto: "faishal.jpeg", warna: "green", posisi: "center 55%" },
   { nama: "Hilmi Juliansyah", npm: "257006111080", foto: "hilmi.jpeg", warna: "orange", posisi: "center 35%" },
   { nama: "Muhammad Alfaridzi Hudmawan", npm: "257006111085", foto: "alpa.jpeg", warna: "blue", posisi: "center 58%" },
-  { nama: "Muhammad Fatan Labiha", npm: "257006111093", foto: "fatan.jpeg", warna: "green", posisi: "center 62%" },
+  { nama: "Muhammad Fatan Labiba", npm: "257006111093", foto: "fatan.jpeg", musik: `${BASE}foto/fatan.mp3`, warna: "green", posisi: "center 62%" },
   { nama: "Rakha Fauzan Nughraha", npm: "257006111083", foto: "rakha.jpg", musik: `${BASE}foto/rakha.mpeg`, warna: "orange", posisi: "center 38%" },
 ];
 

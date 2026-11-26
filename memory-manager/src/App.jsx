@@ -9,6 +9,7 @@ import Comparison from './pages/Comparison.jsx'
 import About from './pages/About.jsx'
 import AboutUs from './pages/AboutUs.jsx'
 import AuthPage from './pages/AuthPage.jsx'
+import Chatbot from './components/Chatbot.jsx'
 
 export default function App() {
   const [page, setPage] = useState('beranda')
@@ -43,6 +44,7 @@ export default function App() {
         {page === 'akun' && <AuthPage session={session} />}
       </main>
       <Footer />
+      <Chatbot />
     </div>
   )
 }
